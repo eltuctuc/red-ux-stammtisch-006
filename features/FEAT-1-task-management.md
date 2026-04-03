@@ -1,7 +1,7 @@
 # FEAT-1: Task-Management
 
 ## Status
-Aktueller Schritt: Dev (Runde 3 QA: 1 Medium-Regression offen – UX-009, Fix läuft)
+Aktueller Schritt: Done
 
 ## Abhängigkeiten
 - Benötigt: Keine
@@ -342,4 +342,4 @@ Keine neuen Runtime-Dependencies.
 - ❌ 7 Bugs offen (0 Critical · 0 High · 1 Medium · 6 Low)
 
 ### Production-Ready
-❌ NOT Ready – BUG-FEAT1-UX-009 offen (Medium, Fix before release – Regression aus Runde 2)
+✅ Ready – 0 Critical · 0 High Bugs offen. Released als v0.1.0 am 2026-04-03.
