@@ -1,7 +1,7 @@
 # FEAT-1: Task-Management
 
 ## Status
-Aktueller Schritt: Spec
+Aktueller Schritt: UX
 
 ## Abhängigkeiten
 - Benötigt: Keine
@@ -55,3 +55,106 @@ Der Nutzer kann Tasks mit einem Titel erfassen, bearbeiten, als erledigt markier
 - Mehrere Listen oder Projekte
 - Bulk-Operationen (z.B. alle erledigten Tasks auf einmal löschen)
 - Such-/Filterfunktion
+
+---
+
+## 2. UX Entscheidungen
+*Ausgefüllt von: /red:proto-ux — 2026-04-03*
+
+### Einbettung im Produkt
+Einziger Screen der App. Alle CRUD-Operationen laufen inline auf diesem Screen.
+Route: `/`
+
+### Einstiegspunkte
+App-Start → S-01 direkt (kein Onboarding, kein Login, keine Zwischenseite).
+
+### User Flow
+
+```
+App öffnen
+    ↓
+S-01: Task-Liste (ggf. leer mit Empty State)
+    ↓
+[Eingabefeld oben fokussieren]
+    ↓
+Titel tippen → Enter oder "Hinzufügen" Button
+    ↓
+Task erscheint sofort in der Liste (oben in der Liste)
+    ↓
+Checkbox klicken → Task als erledigt markiert (durchgestrichen, gedämpft)
+    ↓
+Edit-Icon klicken → Titel wird zum Input-Feld (Inline-Edit-Modus)
+    │    ↓ Enter / Save → Gespeichert, zurück zur normalen Ansicht
+    │    ↓ Escape → Abgebrochen, Ursprungstitel wiederhergestellt
+    ↓
+Delete-Icon klicken → Task sofort entfernt (kein Modal)
+```
+
+### Layout (Desktop, zentriert)
+
+```
+┌──────────────────────────────────────┐
+│  [Input: "Neuen Task eingeben..."]  [Hinzufügen] │
+├──────────────────────────────────────┤
+│  □  Task-Titel                  ✎  🗑 │
+│  □  Task-Titel                  ✎  🗑 │
+│  ✓  ~~Erledigter Task~~         ✎  🗑 │
+│  □  Task-Titel (im Edit-Modus):      │
+│     [Input: "Task-Titel"]  [✓] [✕]   │
+└──────────────────────────────────────┘
+```
+
+Max-Breite: 600px, zentriert. Seitlicher Rand: `spacing-page-x-desktop`.
+
+### Interaktionsmuster
+- **Primärmuster:** Input-at-top + Inline-List-Editing (Referenz: design-system/patterns/data-display.md – Listen)
+- **Fehler-Handling:** Silent Validation – "Hinzufügen"-Button disabled bei leerem/Whitespace-Titel; kein Fehlerdialog, Fokus verbleibt im Input
+- **Leerer Zustand:** Empty State mit Icon + Text "Noch keine Tasks – füge deinen ersten oben hinzu." (kein Primär-Button nötig, da Eingabefeld bereits präsent ist)
+- **Ladeverhalten:** Kein Ladezustand – localStorage ist synchron, keine API-Calls
+
+### Eingesetzte Komponenten
+
+| Komponente       | DS-Status         | Quelle                                                    |
+|------------------|-------------------|-----------------------------------------------------------|
+| Input            | ✓ Vorhanden       | design-system/components/input.md                         |
+| Button (primary) | ✓ Vorhanden       | design-system/components/button.md – Variant: primary     |
+| Button (ghost)   | ✓ Vorhanden       | design-system/components/button.md – Variant: ghost, sm   |
+| Button (danger)  | ✓ Vorhanden       | design-system/components/button.md – Variant: danger, icon-only |
+| Card             | ✓ Vorhanden       | design-system/components/card.md – Variant: flat (Listen-Container) |
+| Checkbox         | ⚠ Tokens-Build    | Keine Spec – genehmigt 2026-04-03. Native HTML checkbox + `color-primary-500`, `radius-sm` |
+| List-Item (Task) | ⚠ Tokens-Build    | Keine Spec – genehmigt 2026-04-03. Aus data-display.md Pattern + Tokens |
+| Empty State      | ⚠ Tokens-Build    | Keine Spec – genehmigt 2026-04-03. Aus feedback.md Pattern + Tokens |
+
+### Bewusste Abweichungen vom Design System
+
+| Abweichung | DS-Regel | Entscheidung | Begründung |
+|-----------|----------|--------------|------------|
+| Kein Bestätigungs-Modal beim Löschen | DS: "Danger-Buttons erst nach Bestätigung" | Direktes Löschen ohne Modal | Produkt-Kern ist Overhead-Freiheit. Single-User, persönliche Tasks, kein hochkritischer Datenverlust. Modal würde dem PRD-Grundsatz widersprechen. |
+
+### Navigation nach Aktionen (verbindlich)
+
+| Ausgangs-Screen | Aktion des Nutzers                       | Ziel  | Bedingung                                        |
+|-----------------|------------------------------------------|-------|--------------------------------------------------|
+| S-01            | Enter / "Hinzufügen" mit gültigem Titel  | S-01  | Task erscheint oben in der Liste, Input geleert  |
+| S-01            | Enter / "Hinzufügen" mit leerem Titel    | S-01  | Kein neuer Task, Fokus bleibt im Input           |
+| S-01            | Checkbox klick (offener Task)            | S-01  | Status → Erledigt, visuell aktualisiert          |
+| S-01            | Checkbox klick (erledigter Task)         | S-01  | Status → Offen, visuell aktualisiert             |
+| S-01            | Edit-Icon klick                          | S-01  | Task wechselt in Inline-Edit-Modus               |
+| S-01 (Edit)     | Enter oder Save-Icon                     | S-01  | Titel gespeichert, Edit-Modus verlassen          |
+| S-01 (Edit)     | Escape oder Cancel-Icon                  | S-01  | Ursprungstitel wiederhergestellt                 |
+| S-01            | Delete-Icon klick                        | S-01  | Task sofort entfernt                             |
+
+*(Vollständige Navigations-Abfolgen auch in flows/product-flows.md)*
+
+### DS-Status dieser Implementierung
+- **Konforme Komponenten:** Input, Button (primary, ghost, danger), Card (flat)
+- **Neue Komponenten (Tokens-Build, genehmigt):** Checkbox, List-Item/Task-Item, Empty State
+- **Bewusste Abweichungen:** Kein Bestätigungs-Modal beim Löschen (Single-User-Kontext, Overhead-freies Design)
+
+### Barrierefreiheit (A11y)
+- **Keyboard-Navigation:** Tab durch Tasks; Enter/Space zum Aktivieren von Checkbox; Enter zum Starten/Speichern von Inline-Edit; Escape zum Abbrechen; Tab auf Delete-Icon aktiviert Löschen via Enter
+- **Screen Reader:** `aria-label="Task erledigt markieren"` auf Checkboxen; `aria-checked` state; `aria-label="[Task-Titel] bearbeiten"` / `"[Task-Titel] löschen"` auf Icon-Buttons; `aria-live="polite"` auf der Task-Liste für dynamische Updates
+- **Farbkontrast:** Erledigte Tasks: `color-text-disabled` (`color-neutral-400`) auf `color-neutral-0` – ggf. `color-neutral-500` verwenden. Referenz: design-system/tokens/colors.md
+
+### Mobile-Verhalten
+Mobile-Optimierung nicht im Scope gemäß PRD (Out-of-Scope: "Mobile-Optimierung").
