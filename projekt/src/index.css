@@ -107,6 +107,7 @@ body {
 
 /* DS Button base */
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -180,4 +181,11 @@ body {
   width: 32px;
   padding: 0;
   flex-shrink: 0;
+}
+
+/* Touch-target extension: expands hit area to 44x44px without changing visual size (UX-004) */
+.btn--icon::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
 }

@@ -80,6 +80,14 @@ describe('useTasks', () => {
     expect(result.current.tasks[0].title).toBe('Keep this');
   });
 
+  it('updateTask with whitespace-only title does not change anything', () => {
+    const { result } = renderHook(() => useTasks());
+    act(() => { result.current.addTask('Keep this'); });
+    const id = result.current.tasks[0].id;
+    act(() => { result.current.updateTask(id, '   '); });
+    expect(result.current.tasks[0].title).toBe('Keep this');
+  });
+
   it('deleteTask removes the task from the list', () => {
     const { result } = renderHook(() => useTasks());
     act(() => { result.current.addTask('Task to delete'); });

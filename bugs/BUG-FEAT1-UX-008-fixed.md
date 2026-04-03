@@ -4,7 +4,10 @@
 - **Severity:** Low
 - **Bereich:** Konsistenz
 - **Gefunden von:** UX Reviewer
-- **Status:** Open
+- **Status:** Fixed — 2026-04-03
+
+## Fix
+name=new-task auf TaskInput, name=edit-task auf Edit-Input in TaskItem.
 
 ## Problem
 

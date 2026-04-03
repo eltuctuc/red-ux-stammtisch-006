@@ -36,9 +36,11 @@ describe('TaskList', () => {
     expect(screen.getByRole('status')).toBeInTheDocument();
   });
 
-  it('task list has aria-live="polite"', () => {
-    render(<TaskList {...defaultProps} />);
-    const list = screen.getByRole('list');
-    expect(list).toHaveAttribute('aria-live', 'polite');
+  it('wrapper has aria-live="polite" for persistent live region', () => {
+    const { container } = render(<TaskList {...defaultProps} />);
+    // aria-live is on the wrapper div so the live region persists
+    // when switching between empty state and task list (QA-004)
+    const wrapper = container.firstChild as HTMLElement;
+    expect(wrapper).toHaveAttribute('aria-live', 'polite');
   });
 });

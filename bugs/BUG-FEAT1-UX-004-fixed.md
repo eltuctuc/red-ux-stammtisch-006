@@ -4,7 +4,10 @@
 - **Severity:** Medium
 - **Bereich:** A11y
 - **Gefunden von:** UX Reviewer
-- **Status:** Open
+- **Status:** Fixed — 2026-04-03
+
+## Fix
+.btn--icon::before pseudo-element mit inset: -6px erweitert Hit-Area auf 44x44px.
 
 ## Problem
 

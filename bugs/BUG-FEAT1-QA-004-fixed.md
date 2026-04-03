@@ -4,7 +4,10 @@
 - **Severity:** Medium
 - **Bereich:** A11y
 - **Gefunden von:** QA Engineer
-- **Status:** Open
+- **Status:** Fixed — 2026-04-03
+
+## Fix
+aria-live Wrapper-div in TaskList.tsx – live region bleibt persistent beim Wechsel zwischen Liste und Empty State.
 
 ## Beschreibung
 

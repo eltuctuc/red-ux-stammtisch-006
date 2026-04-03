@@ -4,7 +4,10 @@
 - **Severity:** Medium
 - **Bereich:** A11y
 - **Gefunden von:** UX Reviewer
-- **Status:** Open
+- **Status:** Fixed — 2026-04-03
+
+## Fix
+Fokus-Return nach Edit-Save und Edit-Cancel: gleicher Fix wie QA-002/QA-008.
 
 ## Problem
 

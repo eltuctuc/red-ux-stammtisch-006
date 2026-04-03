@@ -55,11 +55,18 @@ export function TaskItem({
 }: TaskItemProps) {
   const [editValue, setEditValue] = useState(task.title);
   const editInputRef = useRef<HTMLInputElement>(null);
+  const editButtonRef = useRef<HTMLButtonElement>(null);
+  const wasEditingRef = useRef(false);
 
+  // Focus management: input when entering edit mode, edit button when leaving
   useEffect(() => {
     if (isEditing) {
+      wasEditingRef.current = true;
       setEditValue(task.title);
       editInputRef.current?.focus();
+    } else if (wasEditingRef.current) {
+      wasEditingRef.current = false;
+      editButtonRef.current?.focus();
     }
   }, [isEditing, task.title]);
 
@@ -79,15 +86,16 @@ export function TaskItem({
   if (isEditing) {
     return (
       <li className="task-item task-item--editing">
-        <input
-          type="checkbox"
-          className="task-item__checkbox"
-          checked={task.done}
-          disabled
-          aria-label={`Task erledigt markieren: ${task.title}`}
-          aria-checked={task.done}
-          readOnly
-        />
+        <label className="task-item__checkbox-wrap task-item__checkbox-wrap--disabled">
+          <input
+            type="checkbox"
+            className="task-item__checkbox"
+            checked={task.done}
+            disabled
+            aria-label={`Task erledigt markieren: ${task.title}`}
+            readOnly
+          />
+        </label>
         <label htmlFor={`edit-input-${task.id}`} className="sr-only">
           Task bearbeiten
         </label>
@@ -95,6 +103,7 @@ export function TaskItem({
           ref={editInputRef}
           id={`edit-input-${task.id}`}
           type="text"
+          name="edit-task"
           className="task-item__edit-input"
           value={editValue}
           onChange={e => setEditValue(e.target.value)}
@@ -121,16 +130,18 @@ export function TaskItem({
 
   return (
     <li className={`task-item${task.done ? ' task-item--done' : ''}`}>
-      <input
-        type="checkbox"
-        className="task-item__checkbox"
-        checked={task.done}
-        onChange={() => onToggle(task.id)}
-        aria-label={`Task erledigt markieren: ${task.title}`}
-        aria-checked={task.done}
-      />
+      <label className="task-item__checkbox-wrap">
+        <input
+          type="checkbox"
+          className="task-item__checkbox"
+          checked={task.done}
+          onChange={() => onToggle(task.id)}
+          aria-label={`Task erledigt markieren: ${task.title}`}
+        />
+      </label>
       <span className="task-item__title">{task.title}</span>
       <button
+        ref={editButtonRef}
         className="btn btn--ghost btn--sm btn--icon"
         onClick={() => onStartEdit(task.id)}
         aria-label={`${task.title} bearbeiten`}

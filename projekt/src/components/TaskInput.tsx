@@ -33,6 +33,7 @@ export function TaskInput({ onAdd }: TaskInputProps) {
         ref={inputRef}
         id="new-task-input"
         type="text"
+        name="new-task"
         className="task-input__field"
         placeholder="Neuen Task eingeben..."
         value={value}

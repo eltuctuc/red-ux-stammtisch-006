@@ -21,41 +21,38 @@ export function TaskList({
   onStartEdit,
   onCancelEdit,
 }: TaskListProps) {
-  if (tasks.length === 0) {
-    return (
-      <div className="task-empty" role="status">
-        <div className="task-empty__icon" aria-hidden="true">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-            <rect x="8" y="10" width="32" height="34" rx="3" stroke="#9CA3AF" strokeWidth="2" />
-            <path d="M16 10V8C16 6.9 16.9 6 18 6H30C31.1 6 32 6.9 32 8V10" stroke="#9CA3AF" strokeWidth="2" />
-            <path d="M17 22H31M17 29H27" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-        </div>
-        <h2 className="task-empty__title">Noch keine Tasks</h2>
-        <p className="task-empty__desc">Füge deinen ersten Task oben hinzu.</p>
-      </div>
-    );
-  }
-
+  // Persistent aria-live wrapper ensures screen readers are notified
+  // when the list transitions to/from the empty state (QA-004)
   return (
-    <ul
-      className="task-list"
-      aria-label="Task-Liste"
-      aria-live="polite"
-      aria-relevant="additions removals"
-    >
-      {tasks.map(task => (
-        <TaskItem
-          key={task.id}
-          task={task}
-          isEditing={editingId === task.id}
-          onToggle={onToggle}
-          onUpdate={onUpdate}
-          onDelete={onDelete}
-          onStartEdit={onStartEdit}
-          onCancelEdit={onCancelEdit}
-        />
-      ))}
-    </ul>
+    <div aria-live="polite" aria-relevant="additions removals">
+      {tasks.length === 0 ? (
+        <div className="task-empty" role="status">
+          <div className="task-empty__icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <rect x="8" y="10" width="32" height="34" rx="3" stroke="#9CA3AF" strokeWidth="2" />
+              <path d="M16 10V8C16 6.9 16.9 6 18 6H30C31.1 6 32 6.9 32 8V10" stroke="#9CA3AF" strokeWidth="2" />
+              <path d="M17 22H31M17 29H27" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </div>
+          <h2 className="task-empty__title">Noch keine Tasks</h2>
+          <p className="task-empty__desc">Füge deinen ersten Task oben hinzu.</p>
+        </div>
+      ) : (
+        <ul className="task-list" aria-label="Task-Liste">
+          {tasks.map(task => (
+            <TaskItem
+              key={task.id}
+              task={task}
+              isEditing={editingId === task.id}
+              onToggle={onToggle}
+              onUpdate={onUpdate}
+              onDelete={onDelete}
+              onStartEdit={onStartEdit}
+              onCancelEdit={onCancelEdit}
+            />
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }

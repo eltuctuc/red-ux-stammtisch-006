@@ -10,6 +10,21 @@
   border-bottom: none;
 }
 
+/* Touch-target wrapper: 44x44px hit area, 18x18px visual */
+.task-item__checkbox-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.task-item__checkbox-wrap--disabled {
+  cursor: not-allowed;
+}
+
 .task-item__checkbox {
   width: 18px;
   height: 18px;
@@ -55,6 +70,8 @@
   box-shadow: var(--shadow-xs);
 }
 
+/* Focus-delta: glow ring distinguishes focused from unfocused state */
 .task-item__edit-input:focus {
   outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary-100);
 }

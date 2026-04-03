@@ -4,7 +4,10 @@
 - **Severity:** Medium
 - **Bereich:** A11y
 - **Gefunden von:** QA Engineer
-- **Status:** Open
+- **Status:** Fixed — 2026-04-03
+
+## Fix
+Fokus-Return nach Edit-Save: gleicher Fix wie QA-002 (editButtonRef + wasEditingRef).
 
 ## Beschreibung
 

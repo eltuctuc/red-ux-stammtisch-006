@@ -4,7 +4,10 @@
 - **Severity:** Medium
 - **Bereich:** A11y
 - **Gefunden von:** UX Reviewer
-- **Status:** Open
+- **Status:** Fixed — 2026-04-03
+
+## Fix
+Checkbox in <label className=task-item__checkbox-wrap> gewrappt (44x44px hit area, 18x18px visuell).
 
 ## Problem
 

@@ -303,13 +303,13 @@ Keine neuen Runtime-Dependencies.
 ---
 
 ## 5. QA Ergebnisse
-*Ausgefüllt von: /red:proto-qa — 2026-04-03*
+*Ausgefüllt von: /red:proto-qa — 2026-04-03 (Runde 2: Bug-Fix-Retest)*
 
 ### Acceptance Criteria Status
 - [x] AC-1: Neuer Task via Enter oder Button erstellbar ✅
 - [x] AC-2: Task erscheint sofort in Liste ✅
 - [x] AC-3: Task bearbeitbar, gespeichert und sofort angezeigt ✅
-- [x] AC-4: Task als erledigt markierbar (durchgestrichen, gedämpft) ✅ *(Kontrast-Bug: BUG-FEAT1-UX-002)*
+- [x] AC-4: Task als erledigt markierbar (durchgestrichen, gedämpft) ✅
 - [x] AC-5: Erledigter Task zurück auf offen setzbar ✅
 - [x] AC-6: Task löschbar, verschwindet aus Liste ✅
 - [x] AC-7: Tasks in localStorage gespeichert, nach Reload korrekt geladen ✅
@@ -320,19 +320,22 @@ Keine neuen Runtime-Dependencies.
 ✅ Kein `dangerouslySetInnerHTML`. React-Escaping aktiv. Input-Validierung im Hook (nicht nur UI). localStorage enthält keine sensiblen Daten. CSRF/SQL-Injection nicht relevant (kein Backend).
 
 ### A11y-Check
-⚠️ `aria-label` auf Checkboxen und Icon-Buttons vorhanden. `aria-live="polite"` gesetzt. Fokus-Management nach Edit-Modus unvollständig (BUG-FEAT1-QA-002, BUG-FEAT1-QA-008, BUG-FEAT1-UX-005). Kontrast WCAG-Verstoß (BUG-FEAT1-UX-002).
+⚠️ `aria-label` auf Checkboxen und Icon-Buttons vorhanden. `aria-live="polite"` gesetzt. Fokus-Management nach Edit-Modus unvollständig (BUG-FEAT1-QA-002, BUG-FEAT1-QA-008, BUG-FEAT1-UX-005). `outline: none` ohne Focus-Delta im Edit-Input (BUG-FEAT1-QA-003). Touch-Targets unter WCAG 2.5.5 (BUG-FEAT1-UX-003, BUG-FEAT1-UX-004).
+
+### Gefixte Bugs (Runde 1 → Runde 2)
+- ✅ BUG-FEAT1-QA-001 – Stale Closure in useTasks – GEFIXT
+- ✅ BUG-FEAT1-UX-001 – App zentriert sich nicht – GEFIXT
+- ✅ BUG-FEAT1-UX-002 – WCAG Kontrast – Bestätigt False Positive (neutral-500 war bereits korrekt)
 
 ### Offene Bugs
-- BUG-FEAT1-QA-001 – Stale Closure in useTasks (High)
 - BUG-FEAT1-QA-002 – Fokus nach Abbrechen des Edit-Modus geht verloren (Medium)
-- BUG-FEAT1-QA-003 – outline:none im Edit-Input ohne Focus-Alternative (Medium)
+- BUG-FEAT1-QA-003 – outline:none im Edit-Input ohne Focus-Delta (Medium)
 - BUG-FEAT1-QA-004 – aria-live Region verschwindet beim letzten Task-Delete (Medium)
 - BUG-FEAT1-QA-005 – aria-checked auf nativem Checkbox redundant (Low)
 - BUG-FEAT1-QA-006 – Test-Coverage fehlt für updateTask mit Whitespace-only Titel (Low)
 - BUG-FEAT1-QA-007 – localStorage-Fehlerfall zeigt keinen Hinweis (Low)
 - BUG-FEAT1-QA-008 – Fokus nach Save im Edit-Modus landet nicht auf Edit-Button (Medium)
-- BUG-FEAT1-UX-001 – App zentriert sich nicht im Viewport (High)
-- BUG-FEAT1-UX-002 – Farbkontrast erledigter Tasks verfehlt WCAG AA (High)
+- BUG-FEAT1-QA-009 – useEffect Persistenz-Timing-Fenster (Low)
 - BUG-FEAT1-UX-003 – Touch-Target Checkbox zu klein (Medium)
 - BUG-FEAT1-UX-004 – Icon-Buttons zu klein (Medium)
 - BUG-FEAT1-UX-005 – Kein Fokus-Return nach Edit-Save oder Edit-Cancel (Medium)
@@ -342,7 +345,8 @@ Keine neuen Runtime-Dependencies.
 
 ### Summary
 - ✅ 9/9 Acceptance Criteria passed
-- ❌ 16 Bugs (0 Critical · 3 High · 7 Medium · 6 Low)
+- ✅ 3 High Bugs gefixt
+- ❌ 14 Bugs offen (0 Critical · 0 High · 7 Medium · 7 Low)
 
 ### Production-Ready
-❌ NOT Ready – 3 High Bugs offen (BUG-FEAT1-QA-001, BUG-FEAT1-UX-001, BUG-FEAT1-UX-002)
+❌ NOT Ready – 7 Medium A11y-Bugs offen, davon 6 als "Fix before release" eingestuft (QA-002, QA-003, QA-004, QA-008, UX-003, UX-004, UX-005)
