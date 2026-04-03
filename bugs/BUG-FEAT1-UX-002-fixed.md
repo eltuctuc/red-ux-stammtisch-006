@@ -4,7 +4,10 @@
 - **Severity:** High
 - **Bereich:** A11y
 - **Gefunden von:** UX Reviewer
-- **Status:** Open
+- **Status:** Fixed — 2026-04-03 (bereits in Initialimplementierung korrekt umgesetzt)
+
+## Fix
+False Positive: Der Reviewer prüfte die DS-Spec (neutral-400), nicht den Implementierungscode. `index.css` hat `--color-text-disabled` bereits auf `var(--color-neutral-500)` (#6B7280, ~4.6:1 Kontrast) gesetzt – entsprechend der A11y-Notiz in der UX-Spec. Kein Code-Change nötig.
 
 ## Problem
 

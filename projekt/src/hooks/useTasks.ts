@@ -15,22 +15,22 @@ export function useTasks() {
       done: false,
       createdAt: Date.now(),
     };
-    setTasks([newTask, ...tasks]);
+    setTasks(prev => [newTask, ...prev]);
   }
 
   function toggleTask(id: string): void {
-    setTasks(tasks.map(t => (t.id === id ? { ...t, done: !t.done } : t)));
+    setTasks(prev => prev.map(t => (t.id === id ? { ...t, done: !t.done } : t)));
   }
 
   function updateTask(id: string, newTitle: string): void {
     const trimmed = newTitle.trim();
     if (!trimmed) return;
-    setTasks(tasks.map(t => (t.id === id ? { ...t, title: trimmed } : t)));
+    setTasks(prev => prev.map(t => (t.id === id ? { ...t, title: trimmed } : t)));
     setEditingId(null);
   }
 
   function deleteTask(id: string): void {
-    setTasks(tasks.filter(t => t.id !== id));
+    setTasks(prev => prev.filter(t => t.id !== id));
   }
 
   function startEditing(id: string): void {

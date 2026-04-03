@@ -1,6 +1,7 @@
 .task-app {
   width: 100%;
   max-width: 600px;
+  margin: 0 auto;
 }
 
 .task-app__heading {

@@ -4,7 +4,10 @@
 - **Severity:** High
 - **Bereich:** Functional
 - **Gefunden von:** QA Engineer
-- **Status:** Open
+- **Status:** Fixed — 2026-04-03
+
+## Fix
+Alle vier CRUD-Funktionen in `useTasks.ts` auf funktionalen Update-Pattern umgestellt (`setTasks(prev => ...)`). Zusätzlich `useLocalStorage` auf `useEffect`-Sync umgestellt, damit der Hook nativ `Dispatch<SetStateAction<T>>` zurückgibt und Updater-Funktionen korrekt verarbeitet.
 
 ## Beschreibung
 

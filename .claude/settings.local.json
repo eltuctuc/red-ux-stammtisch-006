@@ -18,7 +18,10 @@
       "Bash(git -C /Users/enricoreinsdorf/Projekte/red-ux-stammtisch_006 commit -m \"docs: FEAT-1 tech design – Task-Management\")",
       "Bash(git -C /Users/enricoreinsdorf/Projekte/red-ux-stammtisch_006 push)",
       "Bash(npm test:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(mv bugs/BUG-FEAT1-QA-001.md bugs/BUG-FEAT1-QA-001-fixed.md)",
+      "Bash(mv bugs/BUG-FEAT1-UX-001.md bugs/BUG-FEAT1-UX-001-fixed.md)",
+      "Bash(mv bugs/BUG-FEAT1-UX-002.md bugs/BUG-FEAT1-UX-002-fixed.md)"
     ]
   },
   "enabledMcpjsonServers": [

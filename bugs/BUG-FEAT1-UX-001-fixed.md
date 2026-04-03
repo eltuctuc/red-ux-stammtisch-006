@@ -4,7 +4,10 @@
 - **Severity:** High
 - **Bereich:** Layout
 - **Gefunden von:** UX Reviewer
-- **Status:** Open
+- **Status:** Fixed — 2026-04-03
+
+## Fix
+`margin: 0 auto` zu `.task-app` in `TaskApp.css` ergänzt. Zentrierung ist jetzt komponentenintern gesichert und unabhängig vom Eltern-Kontext.
 
 ## Problem
 
