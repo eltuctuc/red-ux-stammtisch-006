@@ -70,8 +70,8 @@
   box-shadow: var(--shadow-xs);
 }
 
-/* Focus-delta: glow ring distinguishes focused from unfocused state */
+/* Focus-delta: glow ring with sufficient WCAG contrast (primary-500 = 4.9:1 on white) */
 .task-item__edit-input:focus {
   outline: none;
-  box-shadow: 0 0 0 3px var(--color-primary-100);
+  box-shadow: 0 0 0 3px var(--color-primary-500);
 }

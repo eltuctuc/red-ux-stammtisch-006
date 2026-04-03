@@ -1,7 +1,7 @@
 # FEAT-1: Task-Management
 
 ## Status
-Aktueller Schritt: Dev
+Aktueller Schritt: Dev (Runde 3 QA: 1 Medium-Regression offen – UX-009, Fix läuft)
 
 ## Abhängigkeiten
 - Benötigt: Keine
@@ -328,25 +328,18 @@ Keine neuen Runtime-Dependencies.
 - ✅ BUG-FEAT1-UX-002 – WCAG Kontrast – Bestätigt False Positive (neutral-500 war bereits korrekt)
 
 ### Offene Bugs
-- BUG-FEAT1-QA-002 – Fokus nach Abbrechen des Edit-Modus geht verloren (Medium)
-- BUG-FEAT1-QA-003 – outline:none im Edit-Input ohne Focus-Delta (Medium)
-- BUG-FEAT1-QA-004 – aria-live Region verschwindet beim letzten Task-Delete (Medium)
-- BUG-FEAT1-QA-005 – aria-checked auf nativem Checkbox redundant (Low)
-- BUG-FEAT1-QA-006 – Test-Coverage fehlt für updateTask mit Whitespace-only Titel (Low)
 - BUG-FEAT1-QA-007 – localStorage-Fehlerfall zeigt keinen Hinweis (Low)
-- BUG-FEAT1-QA-008 – Fokus nach Save im Edit-Modus landet nicht auf Edit-Button (Medium)
 - BUG-FEAT1-QA-009 – useEffect Persistenz-Timing-Fenster (Low)
-- BUG-FEAT1-UX-003 – Touch-Target Checkbox zu klein (Medium)
-- BUG-FEAT1-UX-004 – Icon-Buttons zu klein (Medium)
-- BUG-FEAT1-UX-005 – Kein Fokus-Return nach Edit-Save oder Edit-Cancel (Medium)
+- BUG-FEAT1-QA-010 – Verschachtelte aria-live + role="status" (Low)
+- BUG-FEAT1-QA-011 – Touch-Target durch overflow:hidden geclipt (Low)
 - BUG-FEAT1-UX-006 – Input Focus-Zustand weicht von DS-Spec ab (Low)
 - BUG-FEAT1-UX-007 – Disabled-Button nutzt opacity statt DS-Hintergrundfarbe (Low)
-- BUG-FEAT1-UX-008 – Pflicht-Attribut name fehlt an Inputs (Low)
+- BUG-FEAT1-UX-009 – Edit-Input Focus-Glow WCAG-Kontrast 1.2:1 (**Medium, Fix läuft**)
 
 ### Summary
 - ✅ 9/9 Acceptance Criteria passed
-- ✅ 3 High Bugs gefixt
-- ❌ 14 Bugs offen (0 Critical · 0 High · 7 Medium · 7 Low)
+- ✅ 13 Bugs gefixt (3 High, 7 Medium, 3 Low)
+- ❌ 7 Bugs offen (0 Critical · 0 High · 1 Medium · 6 Low)
 
 ### Production-Ready
-❌ NOT Ready – 7 Medium A11y-Bugs offen, davon 6 als "Fix before release" eingestuft (QA-002, QA-003, QA-004, QA-008, UX-003, UX-004, UX-005)
+❌ NOT Ready – BUG-FEAT1-UX-009 offen (Medium, Fix before release – Regression aus Runde 2)

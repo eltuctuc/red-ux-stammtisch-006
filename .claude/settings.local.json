@@ -24,8 +24,8 @@
       "Bash(mv bugs/BUG-FEAT1-UX-002.md bugs/BUG-FEAT1-UX-002-fixed.md)",
       "Bash(git -C /Users/enricoreinsdorf/Projekte/red-ux-stammtisch_006 log --oneline -15)",
       "Bash(git -C /Users/enricoreinsdorf/Projekte/red-ux-stammtisch_006 diff --name-only HEAD~1)",
-      "Bash(sed -i '' 's/- \\\\*\\\\*Status:\\\\*\\\\* Open/- **Status:** Fixed — 2026-04-03\\\\n\\\\n## Fix\\\\nFokus-Return nach Edit-Cancel implementiert: `editButtonRef` auf den Edit-Button in `TaskItem.tsx` + `wasEditingRef` um die `isEditing: true→false` Transition zu detektieren. `useEffect` fokussiert den Edit-Button nach Schließen des Edit-Modus./' bugs/BUG-FEAT1-QA-002-fixed.md)",
-      "Bash(python3 -c ':*)"
+      "Bash(python3 -c ':*)",
+      "Bash(git -C /Users/enricoreinsdorf/Projekte/red-ux-stammtisch_006 log --oneline -5)"
     ]
   },
   "enabledMcpjsonServers": [
