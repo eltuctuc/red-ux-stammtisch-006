@@ -1,0 +1,12 @@
+.task-app {
+  width: 100%;
+  max-width: 600px;
+}
+
+.task-app__heading {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-6);
+}

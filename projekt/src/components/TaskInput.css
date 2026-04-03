@@ -1,0 +1,29 @@
+.task-input {
+  display: flex;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+}
+
+.task-input__field {
+  flex: 1;
+  height: 40px;
+  padding: 0 var(--spacing-4);
+  font-family: var(--font-family-base);
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+  background: var(--color-neutral-0);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-default);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  min-width: 0;
+}
+
+.task-input__field::placeholder {
+  color: var(--color-text-disabled);
+}
+
+.task-input__field:focus {
+  outline: none;
+  border: 2px solid var(--color-border-focus);
+  box-shadow: var(--shadow-xs);
+}

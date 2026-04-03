@@ -1,7 +1,7 @@
 # FEAT-1: Task-Management
 
 ## Status
-Aktueller Schritt: Tech
+Aktueller Schritt: Dev
 
 ## Abhängigkeiten
 - Benötigt: Keine
@@ -263,3 +263,39 @@ Keine neuen Runtime-Dependencies.
 - `TaskEmpty`: Wird angezeigt wenn `tasks.length === 0`
 
 **E2E Tests:** Nicht im Scope dieses Prototypen.
+
+---
+
+## 4. Implementierung
+*Ausgefüllt von: /red:proto-dev — 2026-04-03*
+
+### Implementierte Dateien
+- `projekt/src/types/task.ts` – Task-Interface (id, title, done, createdAt)
+- `projekt/src/hooks/useLocalStorage.ts` – Generischer Hook für localStorage-Sync
+- `projekt/src/hooks/useTasks.ts` – CRUD-Logik + editingId State
+- `projekt/src/components/TaskApp.tsx` / `.css` – Haupt-Container (max-width 600px)
+- `projekt/src/components/TaskInput.tsx` / `.css` – Eingabezeile mit Disabled-Button
+- `projekt/src/components/TaskItem.tsx` / `.css` – Normal- und Edit-Modus
+- `projekt/src/components/TaskList.tsx` / `.css` – Liste + Empty State
+- `projekt/src/App.tsx` – Reduziert auf `<TaskApp />`
+- `projekt/src/App.css` – Geleert (Styles in Komponenten)
+- `projekt/src/index.css` – DS-Tokens als CSS Custom Properties + globale Button-Klassen
+- `projekt/src/test-setup.ts` – @testing-library/jest-dom Setup
+- `projekt/src/__tests__/useTasks.test.ts` – 12 Unit-Tests für den Hook
+- `projekt/src/__tests__/TaskInput.test.tsx` – 6 Component-Tests
+- `projekt/src/__tests__/TaskItem.test.tsx` – 10 Component-Tests
+- `projekt/src/__tests__/TaskList.test.tsx` – 4 Component-Tests
+- `projekt/vite.config.ts` – Vitest-Konfiguration ergänzt
+
+### Installierte Dependencies
+- `vitest@4.1.2` (devDependency)
+- `@testing-library/react@16.3.2` (devDependency)
+- `@testing-library/user-event@14.6.1` (devDependency)
+- `@testing-library/jest-dom@6.9.1` (devDependency)
+- `jsdom@29.0.1` (devDependency)
+
+### Offene Punkte / Tech-Debt
+- Checkbox: Tokens-Build (kein DS-Spec), nutzt native HTML `<input type="checkbox">` + `accent-color: var(--color-primary-500)` – genehmigt 2026-04-03
+- List-Item (TaskItem): Tokens-Build ohne DS-Spec – genehmigt 2026-04-03
+- Empty State: Tokens-Build ohne DS-Spec – genehmigt 2026-04-03
+- Kein Bestätigungs-Modal beim Löschen – bewusste Abweichung vom DS (genehmigt 2026-04-03)

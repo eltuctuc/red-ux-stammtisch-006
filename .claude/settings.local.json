@@ -7,7 +7,18 @@
       "Bash(npm install:*)",
       "Bash(git branch:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git tag:*)",
+      "Bash(gh auth:*)",
+      "Bash(gh repo:*)",
+      "Bash(git push:*)",
+      "Bash(git -C /Users/enricoreinsdorf/Projekte/red-ux-stammtisch_006 ls-files projekt/src/)",
+      "Bash(git -C /Users/enricoreinsdorf/Projekte/red-ux-stammtisch_006 log --oneline -10)",
+      "Bash(git -C /Users/enricoreinsdorf/Projekte/red-ux-stammtisch_006 add features/FEAT-1-task-management.md)",
+      "Bash(git -C /Users/enricoreinsdorf/Projekte/red-ux-stammtisch_006 commit -m \"docs: FEAT-1 tech design – Task-Management\")",
+      "Bash(git -C /Users/enricoreinsdorf/Projekte/red-ux-stammtisch_006 push)",
+      "Bash(npm test:*)",
+      "Bash(npm run:*)"
     ]
   },
   "enabledMcpjsonServers": [
