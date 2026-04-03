@@ -1,7 +1,7 @@
 # FEAT-1: Task-Management
 
 ## Status
-Aktueller Schritt: UX
+Aktueller Schritt: Tech
 
 ## Abhängigkeiten
 - Benötigt: Keine
@@ -158,3 +158,108 @@ Max-Breite: 600px, zentriert. Seitlicher Rand: `spacing-page-x-desktop`.
 
 ### Mobile-Verhalten
 Mobile-Optimierung nicht im Scope gemäß PRD (Out-of-Scope: "Mobile-Optimierung").
+
+---
+
+## 3. Technisches Design
+*Ausgefüllt von: /red:proto-architect — 2026-04-03*
+
+### Component-Struktur
+
+```
+App
+└── TaskApp                      ← Haupt-Container (max-width 600px, zentriert)
+    ├── TaskInput                ← Eingabezeile oben
+    │   ├── <input>              ← Text-Eingabefeld (DS: Input, variant: default)
+    │   └── AddButton            ← "Hinzufügen" (DS: Button, variant: primary)
+    │                               disabled wenn inputValue leer / nur Whitespace
+    └── TaskList                 ← Liste aller Tasks
+        ├── TaskItem (×n)        ← Normalmodus: ein Task pro Zeile
+        │   ├── TaskCheckbox     ← Checkbox (Tokens-Build) – toggle done/offen
+        │   ├── TaskTitle        ← Titeltext; durchgestrichen wenn done
+        │   ├── EditButton       ← Icon-Button (DS: Button, variant: ghost, sm)
+        │   └── DeleteButton     ← Icon-Button (DS: Button, variant: danger, sm)
+        ├── TaskItem (Edit-Modus) ← wenn editingId === task.id
+        │   ├── TaskCheckbox     ← disabled im Edit-Modus
+        │   ├── TaskEditInput    ← Input-Feld vorbefüllt mit aktuellem Titel
+        │   ├── SaveButton       ← Icon-Button (DS: Button, variant: ghost, sm)
+        │   └── CancelButton     ← Icon-Button (DS: Button, variant: ghost, sm)
+        └── TaskEmpty            ← Tokens-Build, nur wenn tasks.length === 0
+```
+
+Keine bestehenden Komponenten wiederverwendbar – Scaffold ist vanilla Vite-Template.
+
+### Daten-Modell
+
+**Task-Objekt:**
+- `id`: eindeutige Zeichenkette (generiert via `crypto.randomUUID()`, browser-built-in)
+- `title`: Titeltext des Tasks (nicht leer, getrimmt)
+- `done`: Boolean – ob der Task als erledigt markiert ist
+- `createdAt`: Zeitstempel der Erstellung (Zahl) – für konsistente Reihenfolge
+
+**Gespeichert in:** localStorage, Key `"tasks"` – serialisiert als JSON-Array.
+
+**Reihenfolge:** Neueste Tasks oben (absteigende Sortierung nach `createdAt`).
+
+### API / Daten-Fluss
+
+Kein Backend – alles im Browser.
+
+```
+User-Aktion → CRUD-Funktion → tasks-State (React) → localStorage (Sync)
+                                      ↓
+                               Re-Render der TaskList
+```
+
+**CRUD-Operationen:**
+- `addTask(title)` – neuen Task prependen, in localStorage speichern
+- `toggleTask(id)` – `done`-Status invertieren, speichern
+- `updateTask(id, newTitle)` – Titel ersetzen, speichern
+- `deleteTask(id)` – Task aus Array entfernen, speichern
+
+### Tech-Entscheidungen
+
+- **Custom Hook `useTasks`:** Kapselt State (`tasks[]`, `editingId`) + alle CRUD-Funktionen. `TaskApp` konsumiert nur den Hook – kein Prop-Drilling. Keine externe State-Library nötig bei diesem Scope.
+- **Custom Hook `useLocalStorage`:** Generischer Hook für localStorage-Sync (lesen beim Mount, schreiben bei Änderung). Trennt Persistenz-Logik von Business-Logik.
+- **`crypto.randomUUID()`:** Browser-native UUID-Generierung – kein externes Package nötig.
+- **Kein State-Management-Framework:** `useState` + Custom Hooks reichen für diesen Scope vollständig aus.
+
+### Security-Anforderungen
+
+- **Authentifizierung:** Nicht erforderlich – Single-User, lokal
+- **Autorisierung:** Nicht erforderlich
+- **Input-Validierung:** `title.trim().length > 0` vor `addTask()` und `updateTask()`. Validierung im Hook, nicht nur im UI.
+- **XSS:** React escaped JSX-Ausdrücke standardmäßig – kein `dangerouslySetInnerHTML` verwenden.
+- **localStorage:** Enthält nur Task-Titel (keine sensiblen Daten). Keine Verschlüsselung nötig.
+- **CSRF / SQL-Injection:** Nicht relevant – kein Backend, keine Datenbank.
+
+### Dependencies
+
+Neue `devDependencies`:
+
+| Package | Zweck |
+|---------|-------|
+| `vitest` | Test-Runner (Vite-nativ) |
+| `@testing-library/react` | Komponenten-Tests |
+| `@testing-library/user-event` | Simulierte User-Interaktionen in Tests |
+| `jsdom` | DOM-Umgebung für Vitest |
+
+Keine neuen Runtime-Dependencies.
+
+### Test-Setup
+
+**Unit Tests (`useTasks` Hook):**
+- `addTask` mit gültigem Titel → Task erscheint in Liste
+- `addTask` mit leerem / Whitespace-Titel → kein neuer Task
+- `toggleTask` → done-Status wechselt
+- `updateTask` mit gültigem Titel → Titel aktualisiert
+- `updateTask` mit leerem Titel → keine Änderung
+- `deleteTask` → Task nicht mehr in Liste
+- localStorage-Persistenz: Nach `addTask` ist Wert im localStorage vorhanden
+
+**Component Tests:**
+- `TaskInput`: Button disabled bei leerem Input; Enter löst `addTask` aus
+- `TaskItem`: Checkbox-Klick ruft `toggleTask` auf; Edit-Icon öffnet Edit-Modus; Escape verlässt ohne Änderung; Delete ruft `deleteTask` auf
+- `TaskEmpty`: Wird angezeigt wenn `tasks.length === 0`
+
+**E2E Tests:** Nicht im Scope dieses Prototypen.
